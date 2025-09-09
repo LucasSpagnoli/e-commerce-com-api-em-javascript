@@ -1,5 +1,5 @@
-import { filter } from './functions.js'
-import { url } from './variables.js'
+import { filter, search } from './functions.js'
+import { home, url, categoryBtn, searchBar } from './variables.js'
 
 async function getData(request) {
   try {
@@ -15,5 +15,25 @@ async function getData(request) {
 (async () => {
   const allProducts = await getData(url)
   console.log(allProducts)
+
   filter(allProducts)
+  
+  
+  for (let btn of categoryBtn) {
+    btn.addEventListener('click', (elem) => {
+      let idCat = elem.currentTarget.dataset.id
+      idCat = idCat.replace('-', ' ');
+      filter(allProducts, idCat)
+    })
+  }
+
+  home.addEventListener('click', (elem) =>{
+    filter(allProducts)
+  })
+
+  searchBar.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        search(allProducts, searchBar.value)
+    }
+})
 })()

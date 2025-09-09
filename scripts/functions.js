@@ -1,8 +1,10 @@
 import { productSection } from "./variables.js";
 
 export function showProducts(products, container) {
+    let previousHtml = ''
+
     for (const product of products) {
-        container.innerHTML += `
+        previousHtml += `
             <div class="md:w-65 w-100 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
                 <a href="#">
                     <img class="rounded-t-lg w-75 px-6 pt-1 md:h-60 h-75"
@@ -34,16 +36,28 @@ export function showProducts(products, container) {
                 </div>
             </div>`
     }
+    container.innerHTML = previousHtml
 }
 
+let div = document.createElement('div')
+div.classList.add('products')
+
+
 export function filter(products, filter) {
-    let div = document.createElement('div')
-    div.classList.add('products')
     div.id = `${filter}`
+
+    productSection.innerHTML = ''
+
     productSection.appendChild(div)
-    let filteredProcuts = products
-    if (filter) {
-        filteredProcuts = products.filter(product => product.category === filter)
-    }
+    let filteredProcuts
+
+    filter ? filteredProcuts = products.filter(product => product.category === filter) : filteredProcuts = products
+
     showProducts(filteredProcuts, div)
+}
+
+export function search(products, search) {
+    productSection.appendChild(div)
+    let searchedProcuts = products.filter(product => (product.title).toLowerCase().includes((search).toLowerCase()))
+    showProducts(searchedProcuts, div)
 }
