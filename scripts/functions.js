@@ -1,6 +1,8 @@
 import { carouselBtnLeft, carouselBtnRight, productSection } from "./variables.js";
 
 export function showProducts(products, container) {
+    carouselBtnLeft.classList.add('hidden')
+    carouselBtnRight.classList.add('hidden')
     let previousHtml = ''
     let cards = 0
 
@@ -60,8 +62,6 @@ export function filter(products, filter) {
 
     filter ? filteredProcuts = products.filter(product => product.category === filter) : filteredProcuts = products
 
-    carouselBtnLeft.classList.add('hidden')
-    carouselBtnRight.classList.add('hidden')
     showProducts(filteredProcuts, div)
 }
 
