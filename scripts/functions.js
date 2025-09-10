@@ -1,11 +1,13 @@
-import { productSection } from "./variables.js";
+import { carouselBtnLeft, carouselBtnRight, productSection } from "./variables.js";
 
 export function showProducts(products, container) {
     let previousHtml = ''
+    let cards = 0
 
     for (const product of products) {
+        const hiddenClass = cards >= 4 ? 'hidden' : '';
         previousHtml += `
-            <div class="md:w-65 w-100 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
+            <div class="card md:w-65 w-100 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative card${cards} ${hiddenClass}" data-id='${cards}'>
                 <a href="#">
                     <img class="rounded-t-lg w-75 px-6 pt-1 md:h-60 h-75"
                     src="${product.image}"
@@ -35,6 +37,11 @@ export function showProducts(products, container) {
                     </div>
                 </div>
             </div>`
+        cards++
+    }
+    if (cards > 4) {
+        carouselBtnLeft.classList.remove('hidden')
+        carouselBtnRight.classList.remove('hidden')
     }
     container.innerHTML = previousHtml
 }
@@ -53,6 +60,8 @@ export function filter(products, filter) {
 
     filter ? filteredProcuts = products.filter(product => product.category === filter) : filteredProcuts = products
 
+    carouselBtnLeft.classList.add('hidden')
+    carouselBtnRight.classList.add('hidden')
     showProducts(filteredProcuts, div)
 }
 
